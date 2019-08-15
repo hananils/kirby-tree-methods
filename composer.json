@@ -1,0 +1,18 @@
+{
+    "name": "hananils/kirby-tree-methods",
+    "description": "HTML tree methods for Kirby 3",
+    "type": "kirby-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "hana+nils · Büro für Gestaltung",
+            "email": "buero@hananils.de"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/hananils/kirby-tree-methods/issues/"
+    },
+    "require": {
+        "getkirby/composer-installer": "^1.1"
+    }
+}
