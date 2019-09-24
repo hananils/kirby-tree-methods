@@ -85,6 +85,7 @@ class Tree
     public function clear()
     {
         $this->selection = null;
+        $this->query = null;
 
         return $this;
     }
