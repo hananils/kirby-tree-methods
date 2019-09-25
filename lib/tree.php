@@ -197,6 +197,21 @@ class Tree
     }
 
     /**
+     * Utilities
+     */
+
+    private function getNodes($clear = false)
+    {
+        $nodes = $this->body->childNodes;
+
+        if (!$clear && isset($this->selection) && $this->selection->length) {
+            $nodes = $this->selection;
+        }
+
+        return $nodes;
+    }
+
+    /**
      * Output
      */
 
@@ -207,17 +222,41 @@ class Tree
         }
 
         $html = '';
-        $nodes = $this->body->childNodes;
-
-        if (!$clear && isset($this->selection) && $this->selection->length) {
-            $nodes = $this->selection;
-        }
-
-        foreach ($nodes as $node) {
+        foreach ($this->getNodes($clear) as $node) {
             $html .= $this->document->saveHTML($node);
         }
 
-        echo $html;
+        return $html;
+    }
+
+    public function content($clear = false)
+    {
+        if (!empty($this->error)) {
+            return $this->source;
+        }
+
+        $content = '';
+        foreach ($this->getNodes($clear) as $node) {
+            foreach ($node->childNodes as $children) {
+                $content .= $this->document->saveHTML($children);
+            }
+        }
+
+        return $content;
+    }
+
+    public function text($clear = false)
+    {
+        if (!empty($this->error)) {
+            return $this->source;
+        }
+
+        $text = '';
+        foreach ($this->getNodes($clear) as $node) {
+            $text .= $node->textContent;
+        }
+
+        return $text;
     }
 
     public function toDocument()

@@ -28,28 +28,30 @@ Under the hood, the plugin converts the HTML string to `DomDocument` using `DomD
 
 Given a field named `text`:
 
--   `$page->text()->select('xpath')` – return all elements matching the given xPath query.
--   `$page->text()->first()` – returns the first element of the selection.
--   `$page->text()->last()` – returns the last element of the selection.
--   `$page->text()->nth(5)` – returns the fiths element of the selection.
--   `$page->text()->limit(2)` – returns the first two elements of the selection.
--   `$page->text()->offset(1)` – return all elements but the first one of the selection.
--   `$page->text()->clear()` – clears the selection (select all again).
+- `$page->text()->select('xpath')` – return all elements matching the given xPath query.
+- `$page->text()->first()` – returns the first element of the selection.
+- `$page->text()->last()` – returns the last element of the selection.
+- `$page->text()->nth(5)` – returns the fiths element of the selection.
+- `$page->text()->limit(2)` – returns the first two elements of the selection.
+- `$page->text()->offset(1)` – return all elements but the first one of the selection.
+- `$page->text()->clear()` – clears the selection (select all again).
 
 ### Manipulations
 
 Given a field named `text`:
 
--   `$page->text()->level(2)` – adjusts the headline hierachie to start at the given level.
--   `$page->text()->select('//strong')->setName('em')` – changes all `strong` elements to `em` elements.
--   `$page->text()->select('p')->setAttribute('class', 'example')` – adds an attributes to the selected elements.
--   `$page->text()->wrap('elementname', 'xpathfrom', 'xpathto', ['name' => 'value'])` – wraps all elements (from … to) in the given element, adding attributes if defined.
+- `$page->text()->level(2)` – adjusts the headline hierachie to start at the given level.
+- `$page->text()->select('//strong')->setName('em')` – changes all `strong` elements to `em` elements.
+- `$page->text()->select('p')->setAttribute('class', 'example')` – adds an attributes to the selected elements.
+- `$page->text()->wrap('elementname', 'xpathfrom', 'xpathto', ['name' => 'value'])` – wraps all elements (from … to) in the given element, adding attributes if defined.
 
 ### Output
 
--   `$page->text()->html()` – returns the HTML of current selection.
--   `$page->text()->toDocument()` – returns the `DomDocument` object.
--   `$page->text()->toSelection()` – returns the `DomNodeList` of the current selection.
+- `$page->text()->html()` – returns the HTML of the current selection.
+- `$page->text()->content()` – returns the content of the current selection (text and child nodes).
+- `$page->text()->text()` – returns the text value of the current selection.
+- `$page->text()->toDocument()` – returns the `DomDocument` object.
+- `$page->text()->toSelection()` – returns the `DomNodeList` of the current selection.
 
 ## Examples
 
@@ -90,8 +92,8 @@ Given a field named `text`:
 <p><strong>You:</strong> Yes, of course, you may!</p>
 <p>What's your question?</p>
 <figure>
-    <img src="overview.png" />
-    <figcaption>A nice view</figcaption>
+  <img src="overview.png" />
+  <figcaption>A nice view</figcaption>
 </figure>
 ```
 
@@ -101,15 +103,15 @@ $page->text()->wrap('div', 'p[strong]', 'p[following-sibling::*[1][figcaption]]'
 
 ```html
 <div class="question-or-answer">
-    <p><strong>Me:</strong> May I ask a question?</p>
+  <p><strong>Me:</strong> May I ask a question?</p>
 </div>
 <div class="question-or-answer">
-    <p><strong>You:</strong> Yes, of course, you may!</p>
-    <p>What's your question?</p>
+  <p><strong>You:</strong> Yes, of course, you may!</p>
+  <p>What's your question?</p>
 </div>
 <figure>
-    <img src="overview.png" />
-    <figcaption>A nice view</figcaption>
+  <img src="overview.png" />
+  <figcaption>A nice view</figcaption>
 </figure>
 ```
 
@@ -119,4 +121,4 @@ MIT
 
 ## Credits
 
--   [hana+nils · Büro für Gestaltung](https://hananils.de)
+- [hana+nils · Büro für Gestaltung](https://hananils.de)
