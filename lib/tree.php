@@ -154,6 +154,38 @@ class Tree
         return $this;
     }
 
+    public function wrapText($needle, $name, $attributes = [])
+    {
+        $xpath = new DOMXPath($this->document);
+        $matches = $xpath->query('/html/body//*[contains(text(), ' . $needle . ')]/text()');
+
+        // Create wrapper
+        $element = $this->document->createElement($name);
+        foreach ($attributes as $attribute => $value) {
+            $element->setAttribute($attribute, $value);
+        }
+
+        // Loop over text nodes
+        foreach ($matches as $node) {
+            $parts = explode($needle, $node->textContent);
+
+            for ($i = 0; $i < count($parts); $i++) {
+                $textnode = $this->document->createTextNode($parts[$i]);
+                $node->parentNode->insertBefore($textnode, $node);
+
+                if ($i < count($parts) - 1) {
+                    $wrapper = $element->cloneNode();
+                    $wrapper->textContent = $needle;
+                    $node->parentNode->insertBefore($wrapper, $node);
+                }
+            }
+
+            $node->parentNode->removeChild($node);
+        }
+
+        return $this;
+    }
+
     public function setName($name)
     {
         $i = $this->selection->length - 1;

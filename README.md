@@ -44,6 +44,7 @@ Given a field named `text`:
 - `$page->text()->select('//strong')->setName('em')` – changes all `strong` elements to `em` elements.
 - `$page->text()->select('p')->setAttribute('class', 'example')` – adds an attributes to the selected elements.
 - `$page->text()->wrap('elementname', 'xpathfrom', 'xpathto', ['name' => 'value'])` – wraps all elements (from … to) in the given element, adding attributes if defined.
+- `$page->text()->wrapText('Kirby', 'strong', ['class' => 'is-great'])` – wraps all text occurences of 'Kirby' in a `strong` element with the class `is-great`.
 
 ### Output
 
