@@ -157,7 +157,7 @@ class Tree
     public function wrapText($needle, $name, $attributes = [])
     {
         $xpath = new DOMXPath($this->document);
-        $matches = $xpath->query('/html/body//*[contains(text(), "' . $needle . '")]/text()');
+        $matches = $xpath->query('/html/body//*[text()[contains(.,"' . $needle . '")]]/text()');
 
         // Create wrapper
         $element = $this->document->createElement($name);
