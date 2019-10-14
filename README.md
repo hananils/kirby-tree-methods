@@ -26,33 +26,35 @@ Under the hood, the plugin converts the HTML string to `DomDocument` using `DomD
 
 ### Selections
 
-Given a field named `text`:
+Given a field named `text` and `$tree = $page->text()->toTree()`:
 
-- `$page->text()->select('xpath')` – return all elements matching the given xPath query.
-- `$page->text()->first()` – returns the first element of the selection.
-- `$page->text()->last()` – returns the last element of the selection.
-- `$page->text()->nth(5)` – returns the fiths element of the selection.
-- `$page->text()->limit(2)` – returns the first two elements of the selection.
-- `$page->text()->offset(1)` – return all elements but the first one of the selection.
-- `$page->text()->clear()` – clears the selection (select all again).
+- `$tree->select('xpath')` – return all elements matching the given xPath query.
+- `$tree->first()` – returns the first element of the selection.
+- `$tree->last()` – returns the last element of the selection.
+- `$tree->nth(5)` – returns the fiths element of the selection.
+- `$tree->limit(2)` – returns the first two elements of the selection.
+- `$tree->offset(1)` – return all elements but the first one of the selection.
+- `$tree->clear()` – clears the selection (select all again).
 
 ### Manipulations
 
-Given a field named `text`:
+Given a field named `text` and `$tree = $page->text()->toTree()`:
 
-- `$page->text()->level(2)` – adjusts the headline hierachie to start at the given level.
-- `$page->text()->select('//strong')->setName('em')` – changes all `strong` elements to `em` elements.
-- `$page->text()->select('p')->setAttribute('class', 'example')` – adds an attributes to the selected elements.
-- `$page->text()->wrap('elementname', 'xpathfrom', 'xpathto', ['name' => 'value'])` – wraps all elements (from … to) in the given element, adding attributes if defined.
-- `$page->text()->wrapText('Kirby', 'strong', ['class' => 'is-great'])` – wraps all text occurences of 'Kirby' in a `strong` element with the class `is-great`.
+- `$tree->level(2)` – adjusts the headline hierachie to start at the given level.
+- `$tree->select('//strong')->setName('em')` – changes all `strong` elements to `em` elements.
+- `$tree->select('p')->setAttribute('class', 'example')` – adds an attributes to the selected elements.
+- `$tree->wrap('elementname', 'xpathfrom', 'xpathto', ['name' => 'value'])` – wraps all elements (from … to) in the given element, adding attributes if defined.
+- `$tree->wrapText('Kirby', 'strong', ['class' => 'is-great'])` – wraps all text occurences of 'Kirby' in a `strong` element with the class `is-great`.
 
 ### Output
 
-- `$page->text()->html()` – returns the HTML of the current selection.
-- `$page->text()->content()` – returns the content of the current selection (text and child nodes).
-- `$page->text()->text()` – returns the text value of the current selection.
-- `$page->text()->toDocument()` – returns the `DomDocument` object.
-- `$page->text()->toSelection()` – returns the `DomNodeList` of the current selection.
+Given a field named `text` and `$tree = $page->text()->toTree()`:
+
+- `$tree->html()` – returns the HTML of the current selection.
+- `$tree->content()` – returns the content of the current selection (text and child nodes).
+- `$tree->text()` – returns the text value of the current selection.
+- `$tree->toDocument()` – returns the `DomDocument` object.
+- `$tree->toSelection()` – returns the `DomNodeList` of the current selection.
 
 ## Examples
 
@@ -64,7 +66,7 @@ Given a field named `text`:
 ```
 
 ```php
-<?= $page->text()->level(3) ?>
+<?= $page->text()->toTree()->level(3) ?>
 ```
 
 ```html
@@ -79,7 +81,7 @@ Given a field named `text`:
 ```
 
 ```php
-<?= $page->text()->select('//em[text() = "HTML"]')->setName('abbr')->setAttribute('title' => 'HyperText Markup Language')->clear()->html() ?>
+<?= $page->text()->toTree()->select('//em[text() = "HTML"]')->setName('abbr')->setAttribute('title' => 'HyperText Markup Language')->clear()->html() ?>
 ```
 
 ```html
@@ -99,7 +101,7 @@ Given a field named `text`:
 ```
 
 ```php
-$page->text()->wrap('div', 'p[strong]', 'p[following-sibling::*[1][figcaption]]', ['class' => 'question-or-answer'])
+$page->text()->toTree()->wrap('div', 'p[strong]', 'p[following-sibling::*[1][figcaption]]', ['class' => 'question-or-answer'])
 ```
 
 ```html
