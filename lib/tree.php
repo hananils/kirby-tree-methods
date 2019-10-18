@@ -14,9 +14,11 @@ class Tree
     private $query = null;
     private $errors = [];
 
-    public function __construct($field)
+    public function __construct($field, $source = null)
     {
-        if (isset($field::$methods['blocks'])) {
+        if ($source) {
+            $this->source = $source;
+        } elseif (isset($field::$methods['blocks'])) {
             $this->source = $field->blocks()->html();
         } elseif (isset($field::$methods['kirbytext'])) {
             $this->source = $field->kirbytext();

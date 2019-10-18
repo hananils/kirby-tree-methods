@@ -6,8 +6,8 @@ load([
 
 Kirby::plugin('hananils/kirby-tree-methods', [
     'fieldMethods' => [
-        'toTree' => function ($field) {
-            return new Hananils\Tree($field);
+        'toTree' => function ($field, $source = null) {
+            return new Hananils\Tree($field, $source);
         }
     ]
 ]);
