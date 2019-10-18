@@ -7,6 +7,7 @@ use DOMXPath;
 
 class Tree
 {
+    private $field;
     private $source;
     private $document;
     private $body;
@@ -16,6 +17,8 @@ class Tree
 
     public function __construct($field, $source = null)
     {
+        $this->field = $field;
+
         if ($source) {
             $this->source = $source;
         } elseif (isset($field::$methods['blocks'])) {
@@ -301,6 +304,12 @@ class Tree
     public function toSelection()
     {
         return $this->selection;
+    }
+
+    public function toField($converter = 'html')
+    {
+        $this->field->value = $this->{$converter}();
+        return $this->field;
     }
 
     public function __toString()

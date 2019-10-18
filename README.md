@@ -53,6 +53,7 @@ Given a field named `text`:
 - `$page->text()->text()` – returns the text value of the current selection.
 - `$page->text()->toDocument()` – returns the `DomDocument` object.
 - `$page->text()->toSelection()` – returns the `DomNodeList` of the current selection.
+- `$page->text()->toField('html|content|text')` – returns the field instance with the field value set to the current html (default), content or text value.
 
 ## Examples
 
