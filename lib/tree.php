@@ -29,6 +29,10 @@ class Tree
             $this->source = $field->html();
         }
 
+        if (empty($this->source)) {
+            $this->source = '<html><head></head><body></body></html>';
+        }
+
         $internal = libxml_use_internal_errors(true);
 
         $this->document = new DomDocument();
