@@ -163,7 +163,7 @@ class Tree
         return $this;
     }
 
-    public function wrapText($needle, $name, $attributes = [])
+    public function wrapText($needle, $name, $attributes = [], $word = true)
     {
         $xpath = new DOMXPath($this->document);
         $matches = $xpath->query('/html/body//*[text()[contains(.,"' . $needle . '")]]/text()');
@@ -176,7 +176,11 @@ class Tree
 
         // Loop over text nodes
         foreach ($matches as $node) {
-            $parts = explode($needle, $node->textContent);
+            if ($word === true) {
+                $parts = preg_split('/\b' . $needle . '\b/', $node->textContent);
+            } else {
+                $parts = explode($needle, $node->textContent);
+            }
 
             for ($i = 0; $i < count($parts); $i++) {
                 $textnode = $this->document->createTextNode($parts[$i]);
