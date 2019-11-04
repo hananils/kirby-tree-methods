@@ -116,6 +116,25 @@ class Tree
         return $this;
     }
 
+    public function isEmpty()
+    {
+        if ($this->selection === null) {
+            return true;
+        }
+
+        return empty($this->selection->length);
+    }
+
+    public function isNotEmpty()
+    {
+        return !$this->isEmpty();
+    }
+
+    public function has($query)
+    {
+        return $this->select($query)->isNotEmpty();
+    }
+
     /**
      * Manipulations
      */
