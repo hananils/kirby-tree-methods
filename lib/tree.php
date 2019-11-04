@@ -365,6 +365,7 @@ class Tree
                 $data = array_merge($data, [
                     'parent' => $this->field->parent(),
                     'field' => $this->field,
+                    'node' => $node,
                     'content' => $this->getInnerHtml($node),
                     'attrs' => $this->getAttributes($node),
                     'next' => isset($nodes[$index + 1]) ? $nodes[$index + 1] : null,
