@@ -310,6 +310,23 @@ class Tree
     }
 
     /**
+     * Text methods
+     */
+
+    public function widont()
+    {
+        foreach ($this->getNodes() as $node) {
+            $xpath = new DOMXPath($this->document);
+            $text = $xpath->query('//text()[contains(., " ")]');
+            $last = $text->item($text->length - 1);
+
+            $last->textContent = html_entity_decode(widont($last->textContent));
+        }
+
+        return $this;
+    }
+
+    /**
      * Output
      */
 
