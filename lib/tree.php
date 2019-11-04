@@ -320,7 +320,9 @@ class Tree
             $text = $xpath->query('//text()[contains(., " ")]');
             $last = $text->item($text->length - 1);
 
-            $last->textContent = html_entity_decode(widont($last->textContent));
+            if ($last) {
+                $last->textContent = html_entity_decode(widont($last->textContent));
+            }
         }
 
         return $this;
