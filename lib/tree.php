@@ -20,19 +20,34 @@ class Tree
         $this->field = $field;
 
         if ($source) {
-            $this->source = $source;
-        } elseif (isset($field::$methods['blocks'])) {
-            $this->source = $field->blocks()->html();
+            $this->set($source);
+        } elseif (isset($field::$methods['toBlocks'])) {
+            $this->set($field->toBlocks()->html());
         } elseif (isset($field::$methods['kirbytext'])) {
-            $this->source = $field->kirbytext();
+            $this->set($field->kirbytext());
         } else {
-            $this->source = $field->html();
+            $this->set($field->html());
         }
 
-        if (empty($this->source)) {
-            $this->source = '<html><head></head><body></body></html>';
+        $this->load();
+    }
+
+    public function set($source = null)
+    {
+        if ($source) {
+            $source = trim($source);
         }
 
+        if (empty($source)) {
+            $source = '<html><head></head><body></body></html>';
+        }
+
+        $this->source = $source;
+        $this->clear();
+    }
+
+    public function load()
+    {
         $internal = libxml_use_internal_errors(true);
 
         $this->document = new DomDocument();
@@ -40,6 +55,8 @@ class Tree
         $this->body = $this->document->documentElement->getElementsByTagName('body')->item(0);
 
         $this->errors = libxml_get_errors();
+        $this->clear();
+
         libxml_clear_errors();
         libxml_use_internal_errors($internal);
     }
@@ -256,6 +273,27 @@ class Tree
         return $nodes;
     }
 
+    private function getInnerHtml($node)
+    {
+        $content = '';
+        foreach ($node->childNodes as $children) {
+            $content .= $this->document->saveHTML($children);
+        }
+
+        return $content;
+    }
+
+    private function getAttributes($node)
+    {
+        $attributes = [];
+
+        foreach ($node->attributes as $attribute => $value) {
+            $attributes[$attribute] = $value;
+        }
+
+        return $attributes;
+    }
+
     /**
      * Output
      */
@@ -282,9 +320,7 @@ class Tree
 
         $content = '';
         foreach ($this->getNodes($clear) as $node) {
-            foreach ($node->childNodes as $children) {
-                $content .= $this->document->saveHTML($children);
-            }
+            $content = $this->getInnerHtml($node);
         }
 
         return $content;
@@ -302,6 +338,46 @@ class Tree
         }
 
         return $text;
+    }
+
+    public function snippets($path = '', $data = [])
+    {
+        if (!empty($this->error)) {
+            return $this->source;
+        }
+
+        $html = '';
+        $nodes = $this->getNodes();
+        foreach ($nodes as $index => $node) {
+            $name = $node->nodeName;
+
+            if (!empty($path)) {
+                $name = $path . '/' . $name;
+            }
+
+            $file = kirby()->root('snippets') . '/' . $name . '.php';
+
+            if (file_exists($file) === false) {
+                $file = kirby()->extensions('snippets')[$name] ?? null;
+            }
+
+            if ($file) {
+                $data = array_merge($data, [
+                    'parent' => $this->field->parent(),
+                    'field' => $this->field,
+                    'content' => $this->getInnerHtml($node),
+                    'attrs' => $this->getAttributes($node),
+                    'next' => isset($nodes[$index + 1]) ? $nodes[$index + 1] : null,
+                    'prev' => isset($nodes[$index - 1]) ? $nodes[$index - 1] : null
+                ]);
+
+                $html .= snippet($name, $data, true);
+            } else {
+                $html .= $this->document->saveHTML($node);
+            }
+        }
+
+        return $html;
     }
 
     public function toDocument()
