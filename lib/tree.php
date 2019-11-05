@@ -315,8 +315,8 @@ class Tree
 
     public function widont()
     {
+        $xpath = new DOMXPath($this->document);
         foreach ($this->getNodes() as $node) {
-            $xpath = new DOMXPath($this->document);
             $text = $xpath->query('//text()[contains(., " ")]');
             $last = $text->item($text->length - 1);
 
