@@ -386,8 +386,11 @@ class Tree
 
         $html = '';
         $nodes = $this->getNodes();
+        $types = [];
         foreach ($nodes as $index => $node) {
             $name = $node->nodeName;
+            $types[] = $name;
+            $count = array_count_values($types);
 
             if (!empty($path)) {
                 $name = $path . '/' . $name;
@@ -407,7 +410,9 @@ class Tree
                     'content' => $this->getInnerHtml($node),
                     'attrs' => $this->getAttributes($node),
                     'next' => isset($nodes[$index + 1]) ? $nodes[$index + 1] : null,
-                    'prev' => isset($nodes[$index - 1]) ? $nodes[$index - 1] : null
+                    'prev' => isset($nodes[$index - 1]) ? $nodes[$index - 1] : null,
+                    'position' => $index + 1,
+                    'positionOfType' => $count[$node->nodeName]
                 ]);
 
                 $html .= snippet($name, $data, true);
