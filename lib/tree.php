@@ -285,7 +285,7 @@ class Tree
     {
         $nodes = $this->body->childNodes;
 
-        if (!$clear && isset($this->selection) && $this->selection->length) {
+        if (!$clear && $this->selection !== null) {
             $nodes = $this->selection;
         }
 
