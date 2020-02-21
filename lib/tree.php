@@ -378,6 +378,19 @@ class Tree
         return $text;
     }
 
+    public function position($selector)
+    {
+        $nodes = $this->getNodes();
+        $xpath = new DOMXPath($nodes->item(0)->ownerDocument);
+
+        foreach ($nodes as $index => $node) {
+            if ($xpath->evaluate('self::' . $selector, $node)->length > 0) {
+                return $index + 1;
+                break;
+            }
+        }
+    }
+
     public function snippets($path = '', $data = [])
     {
         if (!empty($this->error)) {
