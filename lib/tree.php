@@ -52,7 +52,9 @@ class Tree
 
         $this->document = new DomDocument();
         $this->document->loadHTML('<?xml encoding="UTF-8">' . $this->source);
-        $this->body = $this->document->documentElement->getElementsByTagName('body')->item(0);
+        $this->body = $this->document->documentElement
+            ->getElementsByTagName('body')
+            ->item(0);
 
         $this->errors = libxml_get_errors();
         $this->clear();
@@ -183,7 +185,10 @@ class Tree
             while ($wrapper->nextSibling) {
                 $current = $wrapper->nextSibling;
 
-                if ($wrapper->hasChildNodes() && $xpath->query('self::' . $from, $current)->length) {
+                if (
+                    $wrapper->hasChildNodes() &&
+                    $xpath->query('self::' . $from, $current)->length
+                ) {
                     break;
                 }
 
@@ -202,7 +207,9 @@ class Tree
     public function wrapText($needle, $name, $attributes = [], $word = true)
     {
         $xpath = new DOMXPath($this->document);
-        $matches = $xpath->query('/html/body//*[text()[contains(.,"' . $needle . '")]]/text()');
+        $matches = $xpath->query(
+            '/html/body//*[text()[contains(.,"' . $needle . '")]]/text()'
+        );
 
         // Create wrapper
         $element = $this->document->createElement($name);
@@ -213,7 +220,10 @@ class Tree
         // Loop over text nodes
         foreach ($matches as $node) {
             if ($word === true) {
-                $parts = preg_split('/\b' . $needle . '\b/', $node->textContent);
+                $parts = preg_split(
+                    '/\b' . $needle . '\b/',
+                    $node->textContent
+                );
             } else {
                 $parts = explode($needle, $node->textContent);
             }
@@ -244,7 +254,10 @@ class Tree
 
             if ($oldNode->attributes->length) {
                 foreach ($oldNode->attributes as $attribute) {
-                    $newNode->setAttribute($attribute->nodeName, $attribute->nodeValue);
+                    $newNode->setAttribute(
+                        $attribute->nodeName,
+                        $attribute->nodeValue
+                    );
                 }
             }
 
@@ -325,7 +338,9 @@ class Tree
             $last = $text->item($text->length - 1);
 
             if ($last) {
-                $last->textContent = html_entity_decode(widont($last->textContent));
+                $last->textContent = html_entity_decode(
+                    widont($last->textContent)
+                );
             }
         }
 
@@ -422,8 +437,12 @@ class Tree
                     'node' => $node,
                     'content' => $this->getInnerHtml($node),
                     'attrs' => $this->getAttributes($node),
-                    'next' => isset($nodes[$index + 1]) ? $nodes[$index + 1] : null,
-                    'prev' => isset($nodes[$index - 1]) ? $nodes[$index - 1] : null,
+                    'next' => isset($nodes[$index + 1])
+                        ? $nodes[$index + 1]
+                        : null,
+                    'prev' => isset($nodes[$index - 1])
+                        ? $nodes[$index - 1]
+                        : null,
                     'position' => $index + 1,
                     'positionOfType' => $count[$node->nodeName]
                 ]);
