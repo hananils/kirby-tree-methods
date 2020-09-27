@@ -338,9 +338,13 @@ class Tree
             $last = $text->item($text->length - 1);
 
             if ($last) {
-                $last->textContent = html_entity_decode(
-                    widont($last->textContent)
-                );
+                $updated = widont($last->textContent);
+
+                // Make sure slashes break correctly
+                $updated = str_replace(' /&nbsp;', '&nbsp;/ ', $updated);
+                $updated = str_replace('/&nbsp;', '/ ', $updated);
+
+                $last->textContent = html_entity_decode($updated);
             }
         }
 
