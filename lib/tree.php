@@ -134,7 +134,8 @@ class Tree
 
     public function has($query)
     {
-        return $this->select($query)->isNotEmpty();
+        $clone = clone $this;
+        return $clone->select($query)->isNotEmpty();
     }
 
     /**
