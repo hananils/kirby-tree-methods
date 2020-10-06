@@ -15,18 +15,19 @@ class Tree
     private $query = null;
     private $errors = [];
 
-    public function __construct($field, $source = null)
-    {
+    public function __construct(
+        $field,
+        $source = null,
+        $formatter = 'kirbytext'
+    ) {
         $this->field = $field;
 
-        if ($source) {
-            $this->set($source);
-        } elseif (isset($field::$methods['toBlocks'])) {
-            $this->set($field->toBlocks()->html());
-        } elseif (isset($field::$methods['kirbytext'])) {
-            $this->set($field->kirbytext());
+        if (!$source && $formatter && isset($field::$methods[$formatter])) {
+            $this->set($field->{$formatter}());
+        } elseif ($formatter && isset($field::$methods[$formatter])) {
+            $this->set($field->{$formatter}());
         } else {
-            $this->set($field->html());
+            $this->set($source);
         }
 
         $this->load();
