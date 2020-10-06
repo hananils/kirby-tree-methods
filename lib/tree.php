@@ -15,17 +15,14 @@ class Tree
     private $query = null;
     private $errors = [];
 
-    public function __construct(
-        $field,
-        $source = null,
-        $formatter = 'kirbytext'
-    ) {
+    public function __construct($field, $source, $formatter = null)
+    {
         $this->field = $field;
 
-        if (!$source && $formatter && isset($field::$methods[$formatter])) {
-            $this->set($field->{$formatter}());
-        } elseif ($formatter && isset($field::$methods[$formatter])) {
-            $this->set($field->{$formatter}());
+        if ($formatter && isset($field::$methods[$formatter])) {
+            $this->set($field->{$formatter}()->value());
+        } elseif (!$source) {
+            $this->set($field->value());
         } else {
             $this->set($source);
         }
@@ -402,6 +399,11 @@ class Tree
     public function position($selector)
     {
         $nodes = $this->getNodes();
+
+        if (!$nodes->length) {
+            return false;
+        }
+
         $xpath = new DOMXPath($nodes->item(0)->ownerDocument);
 
         foreach ($nodes as $index => $node) {
