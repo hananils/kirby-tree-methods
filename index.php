@@ -5,7 +5,7 @@ require_once __DIR__ . '/lib/tree.php';
 /**
  * Tree field method
  */
-Kirby::plugin('hananils/kirby-tree-methods', [
+Kirby::plugin('hananils/tree-methods', [
     'fieldMethods' => [
         'toTree' => function ($field, $formatter = 'kirbytext') {
             if (!$formatter && !empty(option('hananils.tree.formatter'))) {
