@@ -425,37 +425,29 @@ class Tree
         $types = [];
         foreach ($nodes as $index => $node) {
             $name = $node->nodeName;
+            $default = 'default';
             $types[] = $name;
             $count = array_count_values($types);
 
             if (!empty($path)) {
                 $name = $path . '/' . $name;
+                $default = $path . '/' . $default;
             }
 
-            $file = kirby()->root('snippets') . '/' . $name . '.php';
+            $data = array_merge($data, [
+                'parent' => $this->field->parent(),
+                'field' => $this->field,
+                'node' => $node,
+                'content' => $this->getInnerHtml($node),
+                'attrs' => $this->getAttributes($node),
+                'next' => isset($nodes[$index + 1]) ? $nodes[$index + 1] : null,
+                'prev' => isset($nodes[$index - 1]) ? $nodes[$index - 1] : null,
+                'position' => $index + 1,
+                'positionOfType' => $count[$node->nodeName]
+            ]);
 
-            if (file_exists($file) === false) {
-                $file = kirby()->extensions('snippets')[$name] ?? null;
-            }
-
-            if ($file) {
-                $data = array_merge($data, [
-                    'parent' => $this->field->parent(),
-                    'field' => $this->field,
-                    'node' => $node,
-                    'content' => $this->getInnerHtml($node),
-                    'attrs' => $this->getAttributes($node),
-                    'next' => isset($nodes[$index + 1])
-                        ? $nodes[$index + 1]
-                        : null,
-                    'prev' => isset($nodes[$index - 1])
-                        ? $nodes[$index - 1]
-                        : null,
-                    'position' => $index + 1,
-                    'positionOfType' => $count[$node->nodeName]
-                ]);
-
-                $html .= snippet($name, $data, true);
+            if ($element = snippet([$name, $default], $data, true)) {
+                $html .= $element;
             } else {
                 $html .= $this->document->saveHTML($node);
             }
