@@ -458,10 +458,15 @@ class Tree
 
     public function kirbytextinline($data = [])
     {
+        $xpath = new DOMXPath($this->document);
         foreach ($this->getNodes() as $node) {
-            $node->textContent = html_entity_decode(
-                kirbytextinline($node->textContent, $data)
-            );
+            $texts = $xpath->query('//text()[contains(., " ")]');
+
+            foreach ($texts as $text) {
+                $text->textContent = html_entity_decode(
+                    kirbytextinline($text->textContent)
+                );
+            }
         }
 
         return $this;
@@ -469,10 +474,15 @@ class Tree
 
     public function smartypants()
     {
+        $xpath = new DOMXPath($this->document);
         foreach ($this->getNodes() as $node) {
-            $node->textContent = html_entity_decode(
-                smartypants($node->textContent)
-            );
+            $texts = $xpath->query('//text()[contains(., " ")]');
+
+            foreach ($texts as $text) {
+                $text->textContent = html_entity_decode(
+                    smartypants($text->textContent)
+                );
+            }
         }
 
         return $this;
