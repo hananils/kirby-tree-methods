@@ -456,6 +456,28 @@ class Tree
         return $html;
     }
 
+    public function kirbytextinline($data = [])
+    {
+        foreach ($this->getNodes() as $node) {
+            $node->textContent = html_entity_decode(
+                kirbytextinline($node->textContent, $data)
+            );
+        }
+
+        return $this;
+    }
+
+    public function smartypants()
+    {
+        foreach ($this->getNodes() as $node) {
+            $node->textContent = html_entity_decode(
+                smartypants($node->textContent)
+            );
+        }
+
+        return $this;
+    }
+
     public function toDocument()
     {
         return $this->document;
