@@ -337,7 +337,14 @@ class Tree
             $last = $text->item($text->length - 1);
 
             if ($last) {
-                $updated = widont($last->textContent);
+                $updated = $last->textContent;
+
+                // Trailing whitespace
+                if (substr($updated, -1)) {
+                    $updated = $updated . '&nbsp;';
+                } else {
+                    $updated = widont($updated);
+                }
 
                 // Make sure slashes break correctly
                 $updated = str_replace(' /&nbsp;', '&nbsp;/ ', $updated);
