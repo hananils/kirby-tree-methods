@@ -340,7 +340,7 @@ class Tree
                 $updated = $last->textContent;
 
                 // Trailing whitespace
-                if (substr($updated, -1)) {
+                if (substr($updated, -1) === ' ') {
                     $updated = $updated . '&nbsp;';
                 } else {
                     $updated = widont($updated);
