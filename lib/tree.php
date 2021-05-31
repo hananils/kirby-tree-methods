@@ -114,8 +114,8 @@ class Tree
         if ($this->selection === null) {
             return empty($this->body->childNodes->length);
         } else {
-        return empty($this->selection->length);
-    }
+            return empty($this->selection->length);
+        }
     }
 
     public function isNotEmpty()
