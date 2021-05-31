@@ -15,18 +15,10 @@ class Tree
     private $query = null;
     private $errors = [];
 
-    public function __construct($field, $source, $formatter = null)
+    public function __construct($field, $source)
     {
         $this->field = $field;
-
-        if ($formatter && isset($field::$methods[$formatter])) {
-            $this->set($field->{$formatter}()->value());
-        } elseif (!$source) {
-            $this->set($field->value());
-        } else {
             $this->set($source);
-        }
-
         $this->load();
     }
 
