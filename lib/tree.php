@@ -4,6 +4,7 @@ namespace Hananils;
 
 use DomDocument;
 use DOMXPath;
+use Kirby\Toolkit\Str;
 
 class Tree
 {
@@ -18,7 +19,7 @@ class Tree
     public function __construct($field, $source)
     {
         $this->field = $field;
-            $this->set($source);
+        $this->set($source);
         $this->load();
     }
 
@@ -393,6 +394,14 @@ class Tree
         }
 
         return $text;
+    }
+
+    public function excerpt(
+        int $chars = 0,
+        bool $strip = true,
+        string $rep = ' …'
+    ) {
+        return Str::excerpt($this->html(), $chars, $strip, $rep);
     }
 
     public function position($selector)
