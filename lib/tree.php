@@ -114,8 +114,8 @@ class Tree
         if ($this->selection === null) {
             return empty($this->body->childNodes->length);
         } else {
-            return empty($this->selection->length);
-        }
+        return empty($this->selection->length);
+    }
     }
 
     public function isNotEmpty()
@@ -127,6 +127,19 @@ class Tree
     {
         $clone = clone $this;
         return $clone->select($query)->isNotEmpty();
+    }
+
+    public function count()
+    {
+        $count = 0;
+
+        foreach ($this->getNodes() as $node) {
+            if ($node->nodeType === 1) {
+                $count++;
+            }
+        }
+
+        return $count;
     }
 
     /**
