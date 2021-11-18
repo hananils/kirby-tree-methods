@@ -9,7 +9,7 @@ Kirby::plugin('hananils/tree-methods', [
     'fieldMethods' => [
         'toTree' => function ($field, $formatter = null) {
             if (!$formatter && !empty(option('hananils.tree.formatter'))) {
-                $formatter = option('hananils.tree.formatter');
+                $formatter = option('hananils.tree.formatter', 'kirbytext');
             }
 
             if ($formatter === 'toBlocks') {
@@ -21,6 +21,6 @@ Kirby::plugin('hananils/tree-methods', [
             }
 
             return new Hananils\Tree($field, $source);
-        }
-    ]
+        },
+    ],
 ]);
