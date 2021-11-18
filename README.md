@@ -170,7 +170,7 @@ Under the hood, the plugin converts the HTML string to `DomDocument` using `DomD
 
 ### `toTree($formatter)`
 
-Convert to a DOM tree using the given formatter.
+Converts the field value to a DOM tree using the given formatter.
 
 -   **`$formatter`:** a field method to convert the field content to HTML, e. g. `kirbytext` or `toBlocks`. Defaults to `kirbytext`.
 
