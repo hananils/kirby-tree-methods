@@ -174,6 +174,8 @@ Converts the field value to a DOM tree using the given formatter.
 
 -   **`$formatter`:** a field method to convert the field content to HTML, e. g. `kirbytext` or `toBlocks`. Defaults to `kirbytext`.
 
+A global default can be set by defining `hananils.tree.formatter` in the configuration.
+
 ## Selections
 
 Given a field named `text` and `$tree = $page->text()->toTree()`:
