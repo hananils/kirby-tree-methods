@@ -168,6 +168,12 @@ composer require hananils/kirby-tree-methods
 
 Under the hood, the plugin converts the HTML string to `DomDocument` using `DomDocument->loadHTML()`. The content is expected to the encoded using UTF8. XPath is used to filter and find elements in the tree, see https://en.wikipedia.org/wiki/XPath#Syntax_and_semantics_(XPath_1.0).
 
+### `toTree($formatter)`
+
+Convert to a DOM tree using the given formatter.
+
+-   **`$formatter`:** a field method to convert the field content to HTML, e. g. `kirbytext` or `toBlocks`. Defaults to `kirbytext`.
+
 ## Selections
 
 Given a field named `text` and `$tree = $page->text()->toTree()`:
