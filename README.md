@@ -58,7 +58,7 @@ Template:
 Snippets `/site/snippets/elements/p.php`:
 
 ```php
-<div id="wrapper">
+<div class="wrapper">
     <p<?=e($position === 1, 'class="intro"')?>>
         <?= $content ?>
     </p>
@@ -68,10 +68,10 @@ Snippets `/site/snippets/elements/p.php`:
 Output:
 
 ```php
-<div id="wrapper">
+<div class="wrapper">
     <p class="intro">These are Markdown paragraphs that an editor wrote that needs to be wrapped with special markup.</p>
 </div>
-<div id="wrapper">
+<div class="wrapper">
     <p>But the editor shouldn't have to care about markup in his Markdown document.</p>
 </div>
 ```
