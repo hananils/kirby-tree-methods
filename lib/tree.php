@@ -324,8 +324,10 @@ class Tree
     {
         $attributes = [];
 
-        foreach ($node->attributes as $attribute => $item) {
-            $attributes[$attribute] = $item->value;
+        if ($node->attributes) {
+            foreach ($node->attributes as $attribute => $item) {
+                $attributes[$attribute] = $item->value;
+            }
         }
 
         return $attributes;

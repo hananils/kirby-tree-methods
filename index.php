@@ -21,6 +21,6 @@ Kirby::plugin('hananils/tree-methods', [
             }
 
             return new Hananils\Tree($field, $source);
-        },
-    ],
+        }
+    ]
 ]);
