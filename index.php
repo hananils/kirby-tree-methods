@@ -22,5 +22,21 @@ Kirby::plugin('hananils/tree-methods', [
 
             return new Hananils\Tree($field, $source);
         }
+    ],
+    'blockMethods' => [
+        'toTree' => function () {
+            $field = $this->toField();
+            $source = $this->toHtml();
+
+            return new Hananils\Tree($field, $source);
+        }
+    ],
+    'blocksMethods' => [
+        'toTree' => function () {
+            $field = $this->toField();
+            $source = $this->toHtml();
+
+            return new Hananils\Tree($field, $source);
+        }
     ]
 ]);
